@@ -5,15 +5,24 @@ const botao = document.getElementById('btnCadastrar');
 
 // criacao registro
 botao.addEventListener('click', function () {
-    listaUsuario = JSON.parse(localStorage("usuarios")) || [];
+    listaUsuario = JSON.parse(localStorage.getItem("usuarios")) || [];
     const usuario = {
         usuario: document.getElementById('login').value,
         senha: document.getElementById('senha').value
     };
-    //console.log(usuario);
-    listaUsuario.push(usuario);
+
+    const indexEdit = document.getElementById("indexEdit").value;
+    if(indexEdit !== ""){
+        listaUsuario[indexEdit] = usuario;
+        document.getElementById("indexEdit").value = '';
+    }else{
+        listaUsuario.push(usuario);
+    }
+    
     listaJson = JSON.stringify(listaUsuario);
     localStorage.setItem("usuarios", listaJson);
+    document.getElementById("login").value = '';
+    document.getElementById("senha").value = '';
     listar();
 });
 
